@@ -134,8 +134,55 @@ from emp e, emp m
 where e.MGR = m.empno;
 
 
+-- Scott 라는 사원이 근무하고 있는 부서의 평균 급여를 알고 싶다.
+select deptno from emp
+where ename = "Scott";
+
+select avg(sal) from emp
+where deptno = 20;
+
+select avg(sal) from emp
+where deptno = (select deptno from emp where ename = "Scott");
+
+-- 평균 급여보다 많이 받는 사원들의 정보 추출
+select ename, sal from emp
+where sal > (select avg(sal) from emp);
 
 
+select * from emp 
+where deptno = (select deptno from dept where dname = 'RESEARCH');
+
+select * from emp
+where mgr =(select mgr from emp where ename = 'smith') ;
+
+select avg(sal) from emp group by deptno;
+
+-- in, any(중에 하나만 만족하면 ok), all(모두 만족하면 ok)
+-- 서브쿼리의 결과 값이 여러 개일 때
+select * from emp
+where sal in (select min(sal) from emp group by deptno);
+
+select * from emp
+where sal =any (select min(sal) from emp group by deptno);
+
+select * from emp
+where sal >any (select min(sal) from emp group by deptno);
+-- sal > 10번 부서의 최소급여보다 크거나, 20번수터의 최소급여보다 크거나, 30번 부서의 최소급여보다 크거나...
+-- sal > 10번 부서최소 급여 or sal > 20 부서의 최소급여 or ...
+
+select * from emp
+where sal >all (select min(sal) from emp group by deptno);
+-- sal > 10번 부서최소 급여 and sal > 20 부서의 최소급여 and ...
+
+
+
+
+select * from emp
+where deptno in (10, 20);
+
+-- 등호랑 같이 써야함.
+select * from emp
+where deptno =any (10, 20);
 
 
 
