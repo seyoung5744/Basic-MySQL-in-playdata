@@ -104,3 +104,9 @@ select empno 사번, ename 이름, sal * 18 as "연봉" from emp;
 select * from emp;
 select * from emp where ename = trim('   SMITH');
 
+create table member(
+id varchar(20) primary key,
+pwd varchar(20) not null,
+name varchar(20),
+email varchar(20)
+);
